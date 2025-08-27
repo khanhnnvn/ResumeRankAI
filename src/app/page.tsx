@@ -28,8 +28,8 @@ export default function Home() {
   const handleAnalysis = async () => {
     if (!jobDescription || !resume) {
       toast({
-        title: "Missing Documents",
-        description: "Please upload both a job description and a resume.",
+        title: "Thiếu tài liệu",
+        description: "Vui lòng tải lên cả mô tả công việc và hồ sơ.",
         variant: "destructive",
       });
       return;
@@ -56,10 +56,10 @@ export default function Home() {
         interviewQuestions: questions.interviewQuestions,
       });
     } catch (error) {
-      console.error("Analysis failed:", error);
+      console.error("Phân tích thất bại:", error);
       toast({
-        title: "Analysis Failed",
-        description: "An unexpected error occurred during analysis. Please try again.",
+        title: "Phân tích thất bại",
+        description: "Đã xảy ra lỗi không mong muốn trong quá trình phân tích. Vui lòng thử lại.",
         variant: "destructive",
       });
     } finally {
@@ -88,17 +88,17 @@ export default function Home() {
       <main className="flex-grow container mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Unlock Your Next Hire
+            Mở Khóa Nhân Sự Tiếp Theo Của Bạn
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Upload a job description and a candidate's resume to get an instant, AI-powered suitability analysis.
+            Tải lên mô tả công việc và hồ sơ của ứng viên để nhận ngay phân tích sự phù hợp do AI cung cấp.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <FileUploadCard
-            title="Job Description"
-            description="Upload the role's requirements."
+            title="Mô tả công việc"
+            description="Tải lên yêu cầu của vị trí."
             documentType="jobDescription"
             onDataExtracted={(fileName, text) => setJobDescription({ fileName, text })}
             onFileRemoved={() => {
@@ -110,8 +110,8 @@ export default function Home() {
           </FileUploadCard>
 
           <FileUploadCard
-            title="Candidate's Resume"
-            description="Upload the applicant's CV."
+            title="Hồ sơ ứng viên"
+            description="Tải lên CV của ứng viên."
             documentType="resume"
             onDataExtracted={(fileName, text) => setResume({ fileName, text })}
             onFileRemoved={() => {
@@ -131,7 +131,7 @@ export default function Home() {
             className="shadow-lg hover:shadow-primary/50 transition-shadow"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isLoading ? "Analyzing..." : "Generate Analysis"}
+            {isLoading ? "Đang phân tích..." : "Tạo phân tích"}
           </Button>
         </div>
 
@@ -141,7 +141,7 @@ export default function Home() {
       </main>
 
       <footer className="text-center p-4 mt-8 border-t text-sm text-muted-foreground">
-        Powered by AI Studio. Built for modern recruiting.
+        Được cung cấp bởi AI Studio. Xây dựng cho tuyển dụng hiện đại.
       </footer>
     </div>
   );

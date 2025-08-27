@@ -45,20 +45,20 @@ const prompt = ai.definePrompt({
   name: 'assessCandidateSuitabilityPrompt',
   input: {schema: AssessCandidateSuitabilityInputSchema},
   output: {schema: AssessCandidateSuitabilityOutputSchema},
-  prompt: `You are an AI assistant specialized in assessing candidate suitability for job positions.
+  prompt: `Bạn là một trợ lý AI chuyên đánh giá sự phù hợp của ứng viên cho các vị trí công việc.
 
-You will receive a job description and a candidate's resume. Your task is to analyze both documents
-to determine how well the candidate's qualifications align with the job requirements.
+Bạn sẽ nhận được một bản mô tả công việc và hồ sơ của một ứng viên. Nhiệm vụ của bạn là phân tích cả hai tài liệu
+để xác định mức độ phù hợp của trình độ ứng viên với yêu cầu công việc.
 
-Based on your analysis, provide a match score (out of 100) indicating the degree of match between the resume and the job description.
-Also, provide a detailed suitability analysis explaining the strengths and weaknesses of the candidate in relation to the job requirements.
+Dựa trên phân tích của bạn, hãy cung cấp một điểm số phù hợp (trên 100) cho biết mức độ khớp giữa hồ sơ và mô tả công việc.
+Đồng thời, cung cấp một phân tích chi tiết về sự phù hợp giải thích các điểm mạnh và điểm yếu của ứng viên liên quan đến yêu cầu công việc.
 
-Job Description: {{{jobDescription}}}
+Mô tả công việc: {{{jobDescription}}}
 
-Resume: {{{resume}}}
+Hồ sơ: {{{resume}}}
 
-Match Score: 
-Suitability Analysis: `,
+Điểm phù hợp: 
+Phân tích sự phù hợp: `,
 });
 
 const assessCandidateSuitabilityFlow = ai.defineFlow(

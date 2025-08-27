@@ -46,8 +46,8 @@ export function FileUploadCard({
 
     if (file.type !== "application/pdf") {
       toast({
-        title: "Invalid File Type",
-        description: "Please upload a PDF file.",
+        title: "Loại tệp không hợp lệ",
+        description: "Vui lòng tải lên một tệp PDF.",
         variant: "destructive",
       });
       return;
@@ -66,11 +66,11 @@ export function FileUploadCard({
       onDataExtracted(file.name, result.extractedData);
       setUploadState("success");
     } catch (error) {
-      console.error("Error extracting data:", error);
+      console.error("Lỗi trích xuất dữ liệu:", error);
       setUploadState("error");
       toast({
-        title: "Extraction Failed",
-        description: "Could not extract data from the uploaded file. Please try again.",
+        title: "Trích xuất thất bại",
+        description: "Không thể trích xuất dữ liệu từ tệp đã tải lên. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
@@ -103,7 +103,7 @@ export function FileUploadCard({
               <UploadCloud className="w-12 h-12 text-muted-foreground mb-2" />
               <label htmlFor={`file-upload-${documentType}`} className="relative cursor-pointer">
                 <Button asChild>
-                  <span>Upload PDF</span>
+                  <span>Tải lên PDF</span>
                 </Button>
                 <Input
                   ref={inputRef}
@@ -114,7 +114,7 @@ export function FileUploadCard({
                   onChange={handleFileChange}
                 />
               </label>
-              <p className="text-xs text-muted-foreground mt-2">Max file size: 10MB</p>
+              <p className="text-xs text-muted-foreground mt-2">Kích thước tệp tối đa: 10MB</p>
             </>
           )}
 
@@ -129,7 +129,7 @@ export function FileUploadCard({
 
               {uploadState !== "uploading" && (
                  <Button variant="outline" size="sm" onClick={handleRemoveFile}>
-                  Change File
+                  Thay đổi tệp
                 </Button>
               )}
             </div>

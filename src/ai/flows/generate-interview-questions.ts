@@ -40,13 +40,13 @@ const prompt = ai.definePrompt({
   name: 'generateInterviewQuestionsPrompt',
   input: {schema: GenerateInterviewQuestionsInputSchema},
   output: {schema: GenerateInterviewQuestionsOutputSchema},
-  prompt: `You are an expert recruiter. Given the following job description and resume, generate a list of relevant interview questions to assess the candidate's suitability for the role.
+  prompt: `Bạn là một chuyên gia tuyển dụng. Dựa trên mô tả công việc và hồ sơ sau đây, hãy tạo ra một danh sách các câu hỏi phỏng vấn phù hợp để đánh giá sự phù hợp của ứng viên cho vị trí này.
 
-Job Description: {{{jobDescription}}}
+Mô tả công việc: {{{jobDescription}}}
 
-Resume: {{{resume}}}
+Hồ sơ: {{{resume}}}
 
-Interview Questions:`,
+Câu hỏi phỏng vấn:`,
 });
 
 const generateInterviewQuestionsFlow = ai.defineFlow(
