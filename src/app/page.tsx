@@ -6,8 +6,9 @@ import { FileUploadCard } from "@/components/app/file-upload-card";
 import { ResultsDisplay } from "@/components/app/results-display";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2, FileText, Briefcase } from "lucide-react";
+import { Loader2, FileText, Briefcase, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 
 import { assessCandidateSuitability } from "@/ai/flows/assess-candidate-suitability";
 import { generateInterviewQuestions, GenerateInterviewQuestionsOutput } from "@/ai/flows/generate-interview-questions";
@@ -24,12 +25,22 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
 
   const handleAnalysis = async () => {
     if (!jobDescription || !resume) {
       toast({
         title: "Thiếu tài liệu",
         description: "Vui lòng tải lên cả mô tả công việc và hồ sơ.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!user) {
+      toast({
+        title: "Yêu cầu đăng nhập",
+        description: "Vui lòng đăng nhập để thực hiện chức năng này.",
         variant: "destructive",
       });
       return;
@@ -82,6 +93,8 @@ export default function Home() {
     </div>
   );
 
+  const isAnalysisDisabled = !jobDescription || !resume || isLoading || !user || authLoading;
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
@@ -127,12 +140,19 @@ export default function Home() {
           <Button
             size="lg"
             onClick={handleAnalysis}
-            disabled={!jobDescription || !resume || isLoading}
+            disabled={isAnalysisDisabled}
             className="shadow-lg hover:shadow-primary/50 transition-shadow"
           >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : !user && !authLoading ? (
+                <Lock className="mr-2 h-4 w-4" />
+            ) : null }
             {isLoading ? "Đang phân tích..." : "Tạo phân tích"}
           </Button>
+          {!user && !authLoading && (
+            <p className="text-sm text-muted-foreground mt-2">Vui lòng đăng nhập để tạo phân tích.</p>
+          )}
         </div>
 
         {isLoading && <AnalysisSkeleton />}
