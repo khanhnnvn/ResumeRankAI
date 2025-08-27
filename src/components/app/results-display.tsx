@@ -7,12 +7,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lightbulb, Check, ShieldCheck } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Lightbulb, Check, ShieldCheck, FileText, Briefcase } from 'lucide-react';
+import type { GenerateInterviewQuestionsOutput } from "@/ai/flows/generate-interview-questions";
 
 interface ResultsDisplayProps {
   matchScore: number;
   suitabilityAnalysis: string;
-  interviewQuestions: string[];
+  interviewQuestions: GenerateInterviewQuestionsOutput;
 }
 
 export function ResultsDisplay({
@@ -89,14 +91,38 @@ export function ResultsDisplay({
           <CardDescription>Các câu hỏi do AI tạo để tìm hiểu sâu hơn về kỹ năng của ứng viên.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            {interviewQuestions.map((question, index) => (
-              <AccordionItem value={`item-${index}`} key={index}>
-                <AccordionTrigger>Câu hỏi {index + 1}</AccordionTrigger>
-                <AccordionContent className="text-base">{question}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <Tabs defaultValue="job-description">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="job-description">
+                <Briefcase className="mr-2"/>
+                Dựa trên mô tả công việc
+              </TabsTrigger>
+              <TabsTrigger value="resume">
+                <FileText className="mr-2"/>
+                Dựa trên hồ sơ
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="job-description">
+              <Accordion type="single" collapsible className="w-full">
+                {interviewQuestions.jobDescriptionQuestions.map((question, index) => (
+                  <AccordionItem value={`jd-item-${index}`} key={`jd-${index}`}>
+                    <AccordionTrigger>Câu hỏi {index + 1}</AccordionTrigger>
+                    <AccordionContent className="text-base">{question}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </TabsContent>
+            <TabsContent value="resume">
+               <Accordion type="single" collapsible className="w-full">
+                {interviewQuestions.resumeQuestions.map((question, index) => (
+                  <AccordionItem value={`resume-item-${index}`} key={`resume-${index}`}>
+                    <AccordionTrigger>Câu hỏi {index + 1}</AccordionTrigger>
+                    <AccordionContent className="text-base">{question}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

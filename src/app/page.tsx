@@ -10,12 +10,12 @@ import { Loader2, FileText, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 import { assessCandidateSuitability } from "@/ai/flows/assess-candidate-suitability";
-import { generateInterviewQuestions } from "@/ai/flows/generate-interview-questions";
+import { generateInterviewQuestions, GenerateInterviewQuestionsOutput } from "@/ai/flows/generate-interview-questions";
 
 interface AnalysisResult {
   matchScore: number;
   suitabilityAnalysis: string;
-  interviewQuestions: string[];
+  interviewQuestions: GenerateInterviewQuestionsOutput;
 }
 
 export default function Home() {
@@ -53,7 +53,7 @@ export default function Home() {
       setAnalysisResult({
         matchScore: suitability.matchScore,
         suitabilityAnalysis: suitability.suitabilityAnalysis,
-        interviewQuestions: questions.interviewQuestions,
+        interviewQuestions: questions,
       });
     } catch (error) {
       console.error("Phân tích thất bại:", error);

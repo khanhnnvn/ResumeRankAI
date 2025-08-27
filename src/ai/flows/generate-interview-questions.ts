@@ -22,9 +22,12 @@ export type GenerateInterviewQuestionsInput = z.infer<
 >;
 
 const GenerateInterviewQuestionsOutputSchema = z.object({
-  interviewQuestions: z
+  jobDescriptionQuestions: z
     .array(z.string())
-    .describe('An array of relevant interview questions.'),
+    .describe('10 câu hỏi phỏng vấn dựa trên mô tả công việc.'),
+  resumeQuestions: z
+    .array(z.string())
+    .describe('10 câu hỏi phỏng vấn dựa trên hồ sơ của ứng viên.'),
 });
 export type GenerateInterviewQuestionsOutput = z.infer<
   typeof GenerateInterviewQuestionsOutputSchema
@@ -40,13 +43,13 @@ const prompt = ai.definePrompt({
   name: 'generateInterviewQuestionsPrompt',
   input: {schema: GenerateInterviewQuestionsInputSchema},
   output: {schema: GenerateInterviewQuestionsOutputSchema},
-  prompt: `Bạn là một chuyên gia tuyển dụng. Dựa trên mô tả công việc và hồ sơ sau đây, hãy tạo ra một danh sách các câu hỏi phỏng vấn phù hợp để đánh giá sự phù hợp của ứng viên cho vị trí này.
+  prompt: `Bạn là một chuyên gia tuyển dụng. Dựa trên mô tả công việc và hồ sơ ứng viên dưới đây, hãy tạo ra hai danh sách câu hỏi phỏng vấn:
+1. 10 câu hỏi dựa trên mô tả công việc để đánh giá kiến thức và kỹ năng liên quan đến vị trí.
+2. 10 câu hỏi dựa trên hồ sơ của ứng viên để làm rõ kinh nghiệm và các chi tiết trong CV.
 
 Mô tả công việc: {{{jobDescription}}}
 
-Hồ sơ: {{{resume}}}
-
-Câu hỏi phỏng vấn:`,
+Hồ sơ: {{{resume}}}`,
 });
 
 const generateInterviewQuestionsFlow = ai.defineFlow(
