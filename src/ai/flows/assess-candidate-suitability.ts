@@ -29,7 +29,9 @@ const AssessCandidateSuitabilityOutputSchema = z.object({
     ),
   suitabilityAnalysis: z
     .string()
-    .describe('A textual analysis of the candidate suitability.'),
+    .describe(
+      'A textual analysis of the candidate suitability, breaking down matching points and missing points.'
+    ),
 });
 export type AssessCandidateSuitabilityOutput = z.infer<
   typeof AssessCandidateSuitabilityOutputSchema
@@ -51,7 +53,9 @@ Bạn sẽ nhận được một bản mô tả công việc và hồ sơ của 
 để xác định mức độ phù hợp của trình độ ứng viên với yêu cầu công việc.
 
 Dựa trên phân tích của bạn, hãy cung cấp một điểm số phù hợp (trên 100) cho biết mức độ khớp giữa hồ sơ và mô tả công việc.
-Đồng thời, cung cấp một phân tích chi tiết về sự phù hợp giải thích các điểm mạnh và điểm yếu của ứng viên liên quan đến yêu cầu công việc.
+Đồng thời, cung cấp một phân tích chi tiết về sự phù hợp, làm rõ những điểm sau:
+- Điểm phù hợp: Những kỹ năng, kinh nghiệm của ứng viên khớp với mô tả công việc.
+- Điểm còn thiếu sót: Những kỹ năng, yêu cầu công việc mà ứng viên chưa đáp ứng.
 
 Mô tả công việc: {{{jobDescription}}}
 
