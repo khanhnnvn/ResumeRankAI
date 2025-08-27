@@ -70,7 +70,7 @@ export function AuthButton() {
     if (user) {
         return (
             <div className="flex items-center gap-4">
-                <span className="text-sm font-medium hidden sm:inline">Chào, {user.displayName || user.email}</span>
+                <span className="text-sm font-medium hidden sm:inline">Họ và tên: {user.displayName || user.email}</span>
                 <Button variant="outline" size="sm" onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Đăng xuất
