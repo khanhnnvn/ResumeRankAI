@@ -141,7 +141,7 @@ export default function Home() {
       </main>
 
       <footer className="text-center p-4 mt-8 border-t text-sm text-muted-foreground">
-        Được cung cấp bởi AI Studio. Xây dựng cho tuyển dụng hiện đại.
+        Xây dựng cho tuyển dụng hiện đại.
       </footer>
     </div>
   );
