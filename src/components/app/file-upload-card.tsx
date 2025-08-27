@@ -57,20 +57,41 @@ export function FileUploadCard({
     setFileName(file.name);
 
     try {
-      const dataUri = await toDataURL(file);
-      const result = await extractCandidateData({
-        documentDataUri: dataUri,
-        documentType: documentType,
+      // Create a FormData object to send the file
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("documentType", documentType);
+
+      // Upload the file to the server
+      const uploadPromise = fetch("/api/upload", {
+        method: "POST",
+        body: formData,
       });
+
+      // Extract data using Genkit in parallel
+      const extractPromise = toDataURL(file).then(dataUri => 
+        extractCandidateData({
+          documentDataUri: dataUri,
+          documentType: documentType,
+        })
+      );
       
-      onDataExtracted(file.name, result.extractedData);
+      // Wait for both operations to complete
+      const [uploadResponse, extractResult] = await Promise.all([uploadPromise, extractPromise]);
+
+      if (!uploadResponse.ok) {
+        throw new Error("Tải lên tệp thất bại");
+      }
+
+      onDataExtracted(file.name, extractResult.extractedData);
       setUploadState("success");
+      
     } catch (error) {
-      console.error("Lỗi trích xuất dữ liệu:", error);
+      console.error("Lỗi xử lý tệp:", error);
       setUploadState("error");
       toast({
-        title: "Trích xuất thất bại",
-        description: "Không thể trích xuất dữ liệu từ tệp đã tải lên. Vui lòng thử lại.",
+        title: "Xử lý tệp thất bại",
+        description: "Đã xảy ra lỗi khi xử lý tệp của bạn. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
