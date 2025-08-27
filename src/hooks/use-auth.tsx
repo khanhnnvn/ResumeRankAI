@@ -5,6 +5,7 @@ import { onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/aut
 import { auth, googleProvider } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { LogIn, LogOut } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface AuthContextType {
   user: User | null;
@@ -71,6 +72,10 @@ export function AuthButton() {
         return (
             <div className="flex items-center gap-4">
                 <span className="text-sm font-medium hidden sm:inline">Họ và tên: {user.displayName || user.email}</span>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.photoURL || undefined} alt={user.displayName || "User Avatar"} />
+                  <AvatarFallback>{user.displayName?.charAt(0) || user.email?.charAt(0)}</AvatarFallback>
+                </Avatar>
                 <Button variant="outline" size="sm" onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Đăng xuất
