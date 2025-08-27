@@ -88,7 +88,7 @@ export default function Home() {
       <main className="flex-grow container mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            Mở Khóa Nhân Sự Tiếp Theo Của Bạn
+            Nhận xét ứng viên tự động
           </h2>
           <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
             Tải lên mô tả công việc và hồ sơ của ứng viên để nhận ngay phân tích sự phù hợp do AI cung cấp.
